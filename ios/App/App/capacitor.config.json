@@ -1,0 +1,13 @@
+{
+  "appId": "com.meka.ethereum",
+  "appName": "ethereum-explorer",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/ethereum-explorer",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

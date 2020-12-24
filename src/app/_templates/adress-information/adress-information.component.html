@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="card-body">
+      <div class="input-group form-floating mb-3">
+          <input (keyup.enter)="loadAdressData($event)" id="adress" [(ngModel)]="adress" type="text" class="form-control" id="floatingInput" value={{this.adress}}>
+          <label for="floatingInput">ETH Adress</label>
+          <button (click)="loadAdressData($event)" class="btn btn-outline-primary" type="button">🔍 Search</button>
+      </div>
+    
+    <div class="form-text">
+      An ETH address, also known as an ERC20 address, is the receiving address of an Ethereum wallet. The address starts with “0x” and is followed by a series of 40 random characters. <br><br>
+      Example: 0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8
+    </div>
+  </div>
+  <div *ngIf="adressInformationReceived">
+    <hr>
+    <div class="card-body">
+      <h5 class="card-title">Adress Information</h5>
+      <div>
+        <h6>Balance</h6>
+        <p><span>{{this.balance}}</span> Ether</p>
+      </div>
+      <div>
+        <h6>Value</h6>
+        <p><span>${{this.value}}</span><i>(@ ${{this._coinInformation.currentPriceUSD}}/ETH)</i></p>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <button (click)="adressInformationReceived = !adressInformationReceived" class="btn btn-outline-secondary">Hide ⬆️</button>
+          </div>
+        </div>
+      </div>
+</div>
+</div>
+
+
+<div *ngIf="adressInformationError" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>🤷‍♂️ Oh crap</strong> Looks like we couldn't find the adress you typed in... Please check for typos or try another one.
+</div>
+

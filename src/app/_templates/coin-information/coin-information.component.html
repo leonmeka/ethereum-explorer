@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{this.id}} <b>({{this.symbol}})</b></h5>
+      <p class="card-text">{{this.desc}}.</p>
+    </div>
+    
+    <app-graph></app-graph>
+
+  <div class="card-header" id="headingOne">
+    <h5 class="mb-0">
+      <button (click)="collapsed = !collapsed" class="btn btn-link center">
+        More Info
+      </button>
+    </h5>
+  </div>
+
+  <div *ngIf="collapsed">
+    <div class="card-body">
+      <ul class="list-group list-group-flush">    
+        <li class="list-group-item">Market Capitalization Rank: <span>{{this.marketCapRank}}</span></li>
+      <li class="list-group-item">Market Capitalization: <span>${{this.marketCap}}</span></li>
+      <li class="list-group-item">Current Price: <span>${{this.currentPriceUSD}}</span></li>
+      <li class="list-group-item">All Time High: <span>${{this.allTimeHigh}}</span></li>
+      <li class="list-group-item">All Time Low: <span>${{this.allTimeLow}}</span></li>
+    </ul>
+    </div>
+  </div>
+</div>
