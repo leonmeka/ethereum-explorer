@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
+Ethereum-Explorer offers a easy access to the latest Ether information and analytics for crypto investors and traders. Just search for your wallet and find all relevant data.
+
+Example:
+
+![Example Image](./example_image.png)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
