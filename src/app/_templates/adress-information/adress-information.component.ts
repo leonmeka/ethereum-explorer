@@ -32,7 +32,7 @@ export class AdressInformationComponent implements OnInit {
     this.loading = true;
     this.error = false;
     this.severeError = false;
-    this.informationReceived = true;
+    this.informationReceived = false;
 
       this._dataService.getAdressData(this.adress).subscribe((data) => {
       // Divided by this huge number in order to get the real value.. should find a better way to do this!
@@ -41,7 +41,6 @@ export class AdressInformationComponent implements OnInit {
 
       this.loading = false;
       }, error =>{
-        //console.log(error.statusText);
         if(error.statusText == "OK"){
           this.error = true;
           this.severeError = false;
