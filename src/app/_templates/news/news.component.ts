@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/_services/data-service';
 
 @Component({
   selector: 'app-news',
@@ -7,9 +8,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewsComponent implements OnInit {
 
-  constructor() { }
+  articles:Object[];
+  
+  severeError:boolean;
+  error:boolean;
+  errorMessage:string;
+
+  constructor(private _dataService:DataService) { 
+    this.loadNews();
+    this.articles = [];
+  }
 
   ngOnInit(): void {
   }
 
+  public loadNews(){
+    this._dataService.getNewsData().subscribe((_data) => {
+      this.articles = _data["articles"]
+    }, error =>{
+      if(error.statusText == "OK"){
+        this.errorMessage = error.statusText + "(" + error.message + ")";
+        this.error = true;
+        this.severeError = false;
+      }else{
+        this.errorMessage = error.statusText + "(" + error.message + ")";
+        this.severeError = true;
+        this.error = false;
+      }
+    });
+  }
 }

@@ -1,38 +1,36 @@
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title-margin">News</h5>
-        <div class="card-deck">
-            <div class="card">
-              <img class="card-img-top" src="..." alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </div>
-            </div>
-            <div class="card">
-              <img class="card-img-top" src="..." alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </div>
-            </div>
-            <div class="card">
-              <img class="card-img-top" src="..." alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </div>
+      <h5 class="card-title-margin">News</h5>
+      <div class="row row-horizon">
+        <div class="col-12 news" *ngFor="let article of articles">
+          <div class="card card-block">
+
+          <img class="card-img-top" src="{{article['urlToImage']}}" alt="Card image cap">
+
+          <div class="card-body">
+
+            <h5 class="card-title">{{article['title']}}</h5>
+            <p class="card-text">{{article['description']}}</p>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a href="{{article['url']}}"><button class="btn btn-primary me-md-2" type="button">Learn more</button></a>
             </div>
           </div>
 
+          <div class="card-footer">
+            <small class="text-muted">Published at {{article['publishedAt']}} via {{article['author']}} <i>({{article['source']['name']}})</i></small>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
+    <strong>😖 Oh oh.</strong> This shouldn't have happened. Please try again later.<br>
+    <i>devconsole: {{this.errorMessage}}</i>
+  </div>
+
+  <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
+    <strong>🤷‍♂️ Hmmmm.</strong> Looks like we couldn't find the adress you typed in... Please check for typos or try another one.<br>
+  </div>
 </div>

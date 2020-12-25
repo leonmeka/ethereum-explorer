@@ -1,15 +1,25 @@
-import { Component } from '@angular/core';
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class GraphComponent {
-  saleData = [
-    { name: "Mobiles", value: 105000 },
-    { name: "Laptop", value: 55000 },
-    { name: "AC", value: 15000 },
-    { name: "Headset", value: 150000 },
-    { name: "Fridge", value: 20000 }
-  ];
-}
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { GraphComponent } from './graph.component';
+
+describe('NewsComponent', () => {
+  let component: GraphComponent;
+  let fixture: ComponentFixture<GraphComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ GraphComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(GraphComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
