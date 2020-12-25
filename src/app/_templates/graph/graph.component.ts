@@ -26,11 +26,10 @@ export class GraphComponent {
 
   public loadCoinHistory(){
     this.loading = true;
+    this.error = false;
+    this.severeError = false;
 
     this._dataService.getCoinHistoryData().subscribe((_data) => {
-      this.error = false;
-      this.severeError = false;
-      
       var string = JSON.stringify(_data);
       string = string.split('timestamp').join('name');
       string = string.split('rate').join('value');

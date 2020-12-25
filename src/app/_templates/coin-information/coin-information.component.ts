@@ -35,10 +35,10 @@ export class CoinInformationComponent implements OnInit {
 
   public loadCoinData(){
     this.loading = true;
+    this.error = false;
+    this.severeError = false;
     
     this._dataService.getCoinData().subscribe((data) => {
-      this.error = false;
-      this.severeError = false;
       this.id = data["id"];
       this.id = this.id.charAt(0).toUpperCase() + this.id.slice(1);
 

@@ -26,6 +26,8 @@ export class NewsComponent implements OnInit {
 
   public loadNews(){
     this.loading = true;
+    this.error = false;
+    this.severeError = false;
 
     this._dataService.getNewsData().subscribe((_data) => {
       this.articles = _data["articles"]

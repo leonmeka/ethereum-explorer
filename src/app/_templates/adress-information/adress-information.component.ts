@@ -30,12 +30,11 @@ export class AdressInformationComponent implements OnInit {
 
   public loadAdressData(event:any){
     this.loading = true;
+    this.error = false;
+    this.severeError = false;
+    this.informationReceived = true;
 
       this._dataService.getAdressData(this.adress).subscribe((data) => {
-      this.error = false;
-      this.severeError = false;
-      this.informationReceived = true;
-
       // Divided by this huge number in order to get the real value.. should find a better way to do this!
       this.balance = data["balance"]/1000000000000000000 as number;
       this.value = this.roundTo(this.balance * this._coinInformation.currentPriceUSD,2);
