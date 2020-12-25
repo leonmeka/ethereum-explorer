@@ -14,34 +14,53 @@ export class GraphComponent {
     domain: ['#0275d8']
   };
 
+  severeError:boolean;
+  error:boolean;
+  errorMessage:string;
+
   constructor(private _dataService:DataService) { 
     this.loadCoinHistory();
   }
 
   public loadCoinHistory(){
     this._dataService.getCoinHistoryData().subscribe((_data) => {
-        var string = JSON.stringify(_data);
-        string = string.split('timestamp').join('name');
-        string = string.split('rate').join('value');
-        
-        var json = JSON.parse(string);
-        
-        this.multi = 
-        [
-          {
-            "name": "ETH/USD",
-            "series": [
-            ]
-          }
-        ];        
+      this.error = false;
+      this.severeError = false;
+      
+      var string = JSON.stringify(_data);
+      string = string.split('timestamp').join('name');
+      string = string.split('rate').join('value');
+      
+      var json = JSON.parse(string);
+      
+      this.multi = 
+      [
+        {
+          "name": "ETH/USD",
+          "series": [
+          ]
+        }
+      ];        
 
-        this.multi[0]["series"] = json;
+      this.multi[0]["series"] = json;
 
-        this.multi[0]["series"].forEach(element => {
-          element["name"] = new Date(Date.parse(element["name"]));
-          element["value"] = this.roundTo(element["value"],2);
-        });
-        }, error =>{ 
+      this.multi[0]["series"].forEach(element => {
+        this.error = false;
+        this.severeError = false;
+
+        element["name"] = new Date(Date.parse(element["name"]));
+        element["value"] = this.roundTo(element["value"],2);
+      });
+      }, error =>{
+        if(error.statusText == "OK"){
+          this.errorMessage = error.statusText + "(" + error.message + ")";
+          this.error = true;
+          this.severeError = false;
+        }else{
+          this.errorMessage = error.statusText + "(" + error.message + ")";
+          this.severeError = true;
+          this.error = false;
+        }
     });
   }
 

@@ -5,7 +5,7 @@
 
 @media only screen and (min-width: 768px) {
     body{
-        width: 60%;
+        width: 80%;
         margin: auto;
     }
 }
@@ -15,4 +15,12 @@
         width: 100%;
         margin: auto;
     }
+  }
+
+  .card-title-margin{
+      margin-bottom: 1em;
+  }
+
+  .padding{
+      padding: 1em;
   }

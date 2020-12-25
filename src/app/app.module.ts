@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { CoinInformationComponent } from './_templates/coin-information/coin-information.component';
 import { GraphComponent } from './_templates/graph/graph.component';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { NewsComponent } from './_templates/news/news.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';
     AdressInformationComponent,
     FooterComponent,
     CoinInformationComponent,
-    GraphComponent
+    GraphComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,

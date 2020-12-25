@@ -19,6 +19,10 @@ export class CoinInformationComponent implements OnInit {
   public trustScore:string;
   public desc:string;
 
+  severeError:boolean;
+  error:boolean;
+  errorMessage:string;
+
   constructor(private _dataService:DataService) { 
     this.loadCoinData();
     this.collapsed = false;
@@ -29,20 +33,31 @@ export class CoinInformationComponent implements OnInit {
 
   public loadCoinData(){
     this._dataService.getCoinData().subscribe((data) => {
-        this.id = data["id"];
-        this.id = this.id.charAt(0).toUpperCase() + this.id.slice(1);
+      this.error = false;
+      this.severeError = false;
+      this.id = data["id"];
+      this.id = this.id.charAt(0).toUpperCase() + this.id.slice(1);
 
-        this.symbol = data["symbol"];
-        this.symbol = this.symbol.toUpperCase();
-        
-        this.marketCap = data["market_data"]["market_cap"]["usd"];
-        this.marketCapRank = data["market_cap_rank"];
-        this.currentPriceUSD = data["market_data"]["current_price"]["usd"];
-        this.allTimeHigh = data["market_data"]["ath"]["usd"];
-        this.allTimeLow = data["market_data"]["atl"]["usd"];
-        this.desc = data["ico_data"]["short_desc"];
+      this.symbol = data["symbol"];
+      this.symbol = this.symbol.toUpperCase();
+      
+      this.marketCap = data["market_data"]["market_cap"]["usd"];
+      this.marketCapRank = data["market_cap_rank"];
+      this.currentPriceUSD = data["market_data"]["current_price"]["usd"];
+      this.allTimeHigh = data["market_data"]["ath"]["usd"];
+      this.allTimeLow = data["market_data"]["atl"]["usd"];
+      this.desc = data["ico_data"]["short_desc"];
 
-        }, error =>{
+      }, error =>{
+        if(error.statusText == "OK"){
+          this.errorMessage = error.statusText + "(" + error.message + ")";
+          this.error = true;
+          this.severeError = false;
+        }else{
+          this.errorMessage = error.statusText + "(" + error.message + ")";
+          this.severeError = true;
+          this.error = false;
+        }
     });
   }
 }

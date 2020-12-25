@@ -8,11 +8,16 @@ import { CoinInformationComponent } from '../coin-information/coin-information.c
   styleUrls: ['./adress-information.component.css']
 })
 export class AdressInformationComponent implements OnInit {
+  collapsed:boolean;
   balance:number;
   value:number;
-  adressInformationReceived:boolean;
-  adressInformationError:boolean;
   adress:string;
+
+  informationReceived:boolean;
+  severeError:boolean;
+  error:boolean;
+  errorMessage:string;
+
 
   constructor(private _dataService:DataService, private _coinInformation:CoinInformationComponent) {
   }
@@ -22,16 +27,27 @@ export class AdressInformationComponent implements OnInit {
   }
 
   public loadAdressData(event:any){
-    this._dataService.getAdressData(this.adress).subscribe((data) => {
-      this.adressInformationError = false;
-      this.adressInformationReceived = true;
+      this._dataService.getAdressData(this.adress).subscribe((data) => {
+      this.error = false;
+      this.severeError = false;
+      this.informationReceived = true;
 
-      // Divided by this huge number in order to get real value
+      // Divided by this huge number in order to get the real value.. should find a better way to do this!
       this.balance = data["balance"]/1000000000000000000 as number;
       this.value = this.roundTo(this.balance * this._coinInformation.currentPriceUSD,2);
+
       }, error =>{
-        this.adressInformationError = true;
-        this.adressInformationReceived = false;
+        //console.log(error.statusText);
+        if(error.statusText == "OK"){
+          this.error = true;
+          this.severeError = false;
+          this.informationReceived = false;
+        }else{
+          this.errorMessage = error.statusText + "(" + error.message + ")";
+          this.severeError = true;
+          this.error = false;
+          this.informationReceived = false;
+        }
       });
   }
 
