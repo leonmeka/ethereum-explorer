@@ -18,11 +18,15 @@ export class GraphComponent {
   error:boolean;
   errorMessage:string;
 
+  loading:boolean;
+
   constructor(private _dataService:DataService) { 
     this.loadCoinHistory();
   }
 
   public loadCoinHistory(){
+    this.loading = true;
+
     this._dataService.getCoinHistoryData().subscribe((_data) => {
       this.error = false;
       this.severeError = false;
@@ -50,12 +54,16 @@ export class GraphComponent {
 
         element["name"] = new Date(Date.parse(element["name"]));
         element["value"] = this.roundTo(element["value"],2);
+
+        this.loading = false;
       });
       }, error =>{
         if(error.statusText == "OK"){
           this.errorMessage = error.statusText + "(" + error.message + ")";
           this.error = true;
           this.severeError = false;
+
+          this.loading = false;
         }else{
           this.errorMessage = error.statusText + "(" + error.message + ")";
           this.severeError = true;

@@ -13,6 +13,8 @@
     </ngx-charts-line-chart >
 </div>
 
+<img *ngIf="loading" src="./../../../assets/GIFs/loading.gif" class="center" width="100" height="100">
+
 <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
     <strong>😖 Oh oh.</strong> This shouldn't have happened. Please try again later.<br>
     <i>devconsole: {{this.errorMessage}}</i>

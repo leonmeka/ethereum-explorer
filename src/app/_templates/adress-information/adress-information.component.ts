@@ -18,6 +18,8 @@ export class AdressInformationComponent implements OnInit {
   error:boolean;
   errorMessage:string;
 
+  loading:boolean;
+
 
   constructor(private _dataService:DataService, private _coinInformation:CoinInformationComponent) {
   }
@@ -27,6 +29,8 @@ export class AdressInformationComponent implements OnInit {
   }
 
   public loadAdressData(event:any){
+    this.loading = true;
+
       this._dataService.getAdressData(this.adress).subscribe((data) => {
       this.error = false;
       this.severeError = false;
@@ -36,12 +40,15 @@ export class AdressInformationComponent implements OnInit {
       this.balance = data["balance"]/1000000000000000000 as number;
       this.value = this.roundTo(this.balance * this._coinInformation.currentPriceUSD,2);
 
+      this.loading = false;
       }, error =>{
         //console.log(error.statusText);
         if(error.statusText == "OK"){
           this.error = true;
           this.severeError = false;
           this.informationReceived = false;
+
+          this.loading = false;
         }else{
           this.errorMessage = error.statusText + "(" + error.message + ")";
           this.severeError = true;

@@ -14,6 +14,8 @@ export class NewsComponent implements OnInit {
   error:boolean;
   errorMessage:string;
 
+  loading:boolean;
+
   constructor(private _dataService:DataService) { 
     this.loadNews();
     this.articles = [];
@@ -23,13 +25,19 @@ export class NewsComponent implements OnInit {
   }
 
   public loadNews(){
+    this.loading = true;
+
     this._dataService.getNewsData().subscribe((_data) => {
       this.articles = _data["articles"]
+
+      this.loading = false;
     }, error =>{
       if(error.statusText == "OK"){
         this.errorMessage = error.statusText + "(" + error.message + ")";
         this.error = true;
         this.severeError = false;
+
+        this.loading = false;
       }else{
         this.errorMessage = error.statusText + "(" + error.message + ")";
         this.severeError = true;

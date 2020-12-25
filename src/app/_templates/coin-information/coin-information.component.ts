@@ -23,6 +23,8 @@ export class CoinInformationComponent implements OnInit {
   error:boolean;
   errorMessage:string;
 
+  loading:boolean;
+
   constructor(private _dataService:DataService) { 
     this.loadCoinData();
     this.collapsed = false;
@@ -32,6 +34,8 @@ export class CoinInformationComponent implements OnInit {
   }
 
   public loadCoinData(){
+    this.loading = true;
+    
     this._dataService.getCoinData().subscribe((data) => {
       this.error = false;
       this.severeError = false;
@@ -48,11 +52,14 @@ export class CoinInformationComponent implements OnInit {
       this.allTimeLow = data["market_data"]["atl"]["usd"];
       this.desc = data["ico_data"]["short_desc"];
 
+      this.loading = false;
       }, error =>{
         if(error.statusText == "OK"){
           this.errorMessage = error.statusText + "(" + error.message + ")";
           this.error = true;
           this.severeError = false;
+
+          this.loading = false;
         }else{
           this.errorMessage = error.statusText + "(" + error.message + ")";
           this.severeError = true;

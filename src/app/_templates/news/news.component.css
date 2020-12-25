@@ -1,4 +1,19 @@
 img{
-    height: 250px;
+    height: 125px;
     object-fit: cover;
+}
+
+.even {
+    width: 80vw;
+    height: 400px;
+    max-width: 500px;
+}
+
+.hidden{
+    overflow: scroll;
+}
+
+.news-item{
+    width: 500;
+    margin-right: 2em;
 }
