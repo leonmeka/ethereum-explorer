@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './_templates/navbar/navbar.component';
-import { WalletComponent } from './_templates/features/wallet/wallet.component';
+import { WalletComponent } from './_templates/features/wallets/wallets.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './_templates/footer/footer.component';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +22,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     FooterComponent,
     MarketComponent,
     GraphComponent,
-    NewsComponent
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +30,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     HttpClientModule,
     FormsModule,
     NgxChartsModule,
-    ZXingScannerModule
+    ZXingScannerModule,
   ],
   providers: [MarketComponent],
   bootstrap: [AppComponent]
