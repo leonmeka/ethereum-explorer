@@ -4,14 +4,15 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './_templates/navbar/navbar.component';
-import { WalletComponent } from './_templates/Features/wallet/wallet.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { WalletComponent } from './_templates/features/wallet/wallet.component';
+import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './_templates/footer/footer.component';
 import { FormsModule } from '@angular/forms';
-import { MarketComponent } from './_templates/Features/market/market.component';
-import { GraphComponent } from './_templates/Features/market/graph/graph.component';
+import { MarketComponent } from './_templates/features/market/market.component';
+import { GraphComponent } from './_templates/features/market/graph/graph.component';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
-import { NewsComponent } from './_templates/Features/news/news.component';
+import { NewsComponent } from './_templates/features/news/news.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NewsComponent } from './_templates/Features/news/news.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ZXingScannerModule
   ],
   providers: [MarketComponent],
   bootstrap: [AppComponent]

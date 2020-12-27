@@ -23,11 +23,11 @@
   }
 
   .card-title-margin{
-      margin-bottom: 1em;
+    margin-bottom: 1em;
   }
 
   .padding{
-      padding: 1em;
+    padding: 1em;
   }
 
   .scrollable{
@@ -39,4 +39,8 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+  }
+
+  .selectable{
+    user-select: initial;
   }

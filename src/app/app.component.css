@@ -12,7 +12,7 @@
 }
 
 .navbar{
-  height: 3em;
+  height: 4em;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -104,11 +104,11 @@
 }
 
 #nav-icon1 span:nth-child(2) {
-  top: 7px;
+  top: 9px;
 }
 
 #nav-icon1 span:nth-child(3) {
-  top: 14px;
+  top: 18px;
 }
 
 #nav-icon1.open span:nth-child(1) {

@@ -3,22 +3,25 @@
       <h5 class="card-title-margin">Add New Wallet</h5>
 
       <div class="input-group form-floating mb-3">
-          <input (keyup.enter)="loadAdressData($event)" id="adress" spellcheck="false" [(ngModel)]="adress" type="text" class="form-control" id="floatingInput">
+          <input (keyup.enter)="loadAdressData($event)" id="adress" spellcheck="false" [class.is-invalid]="error" [class.is-valid]="adressIsValid" [(ngModel)]="adress" type="text" class="form-control selectable" id="floatingInput">
           <label for="floatingInput">ETH Adress (ERC20)</label>
-          <button (click)="loadAdressData($event)" class="btn btn-outline-primary" type="button">➕ Add Wallet</button>
+          <button (click)="loadAdressData($event)" class="btn btn-outline-primary" type="button">Add</button>
+          <button (click)="openCamera($event)" data-bs-toggle="modal" data-bs-target="#cameraModal" class="btn btn-outline-dark" type="button">📷</button>
       </div>
+      
     
       <div class="form-text">
         An ETH address, also known as an ERC20 address, is the receiving address of an Ethereum wallet. The address starts with “0x” and is followed by a series of 40 random characters. <br><br>
         Example: 0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8
       </div>
     </div>
+    
 
     <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
       <span class="visually-hidden">Loading...</span>
     </div>
     
-    <div *ngIf="informationReceived">
+    <div *ngIf="adressIsValid">
       <hr>
       <div class="padding">
           <h5 class="card-title-margin" style="display: block; width: 100%">My Wallet</h5>
@@ -30,7 +33,7 @@
                 </div>
                 <div style="display: block; width: 100%">
                   <h6 card-body-title><b>ETH</b> Ethereum</h6>
-                  <span>{{this.balance}}</span> | ${{this._marketComponent.currentPriceUSD}}
+                  <span>{{this.balance}}</span> | ${{this._marketComponent.current_price}}
                 </div>
                 <div style="display: block; float: right; width: 100%; text-align: right;">
                   <h6 card-body-title><span>${{this.value}}</span></h6>
@@ -74,3 +77,20 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal modal-dialog modal-dialog-centered fade" id="cameraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modalCenter">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Scan QR-Code</h5>
+        <button type="button" (click)="cameraEnabled = !cameraEnabled" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <zxing-scanner id="video" *ngIf="cameraEnabled" (scanSuccess)="takePhoto($event);" [formats]="['QR_CODE']"></zxing-scanner>
+      </div>
+      <div class="modal-footer">
+        <button (click)="cameraEnabled = !cameraEnabled; scanSuccessful = !scanSuccessful" type="button" #closeModal class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

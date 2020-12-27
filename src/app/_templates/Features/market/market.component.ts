@@ -11,15 +11,14 @@ export class MarketComponent implements OnInit {
 
   public id:string;
   public symbol:string;
-  public marketCap: number;
-  public marketCapRank: number;
-  public currentPriceUSD:number;
-  public allTimeHigh:number;
+  public market_cap: number;
+  public market_cap_rank: number;
+  public current_price:number;
+  public all_time_high:number;
+  public all_time_low:number;
   public price_change_24h:number;
   public price_change_percentage_24h:number;
-  public allTimeLow:number;
-  public trustScore:string;
-  public desc:string;
+  public description:string;
 
   severeError:boolean;
   error:boolean;
@@ -47,12 +46,12 @@ export class MarketComponent implements OnInit {
       this.symbol = data["symbol"];
       this.symbol = this.symbol.toUpperCase();
       
-      this.marketCap = data["market_data"]["market_cap"]["usd"];
-      this.marketCapRank = data["market_cap_rank"];
-      this.currentPriceUSD = data["market_data"]["current_price"]["usd"];
-      this.allTimeHigh = data["market_data"]["ath"]["usd"];
-      this.allTimeLow = data["market_data"]["atl"]["usd"];
-      this.desc = data["ico_data"]["short_desc"];
+      this.market_cap = data["market_data"]["market_cap"]["usd"];
+      this.market_cap_rank = data["market_cap_rank"];
+      this.current_price = data["market_data"]["current_price"]["usd"];
+      this.all_time_high = data["market_data"]["ath"]["usd"];
+      this.all_time_low = data["market_data"]["atl"]["usd"];
+      this.description = data["ico_data"]["short_desc"];
       this.price_change_24h = this.roundTo(data["market_data"]["price_change_24h"],2);
       this.price_change_percentage_24h = this.roundTo(data["market_data"]["price_change_percentage_24h"],2);
 
