@@ -4,24 +4,22 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './_templates/navbar/navbar.component';
-import { ContentComponent } from './_templates/content/content.component';
-import { AdressInformationComponent } from './_templates/adress-information/adress-information.component';
+import { WalletComponent } from './_templates/Features/wallet/wallet.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './_templates/footer/footer.component';
 import { FormsModule } from '@angular/forms';
-import { CoinInformationComponent } from './_templates/coin-information/coin-information.component';
-import { GraphComponent } from './_templates/graph/graph.component';
+import { MarketComponent } from './_templates/Features/market/market.component';
+import { GraphComponent } from './_templates/Features/market/graph/graph.component';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
-import { NewsComponent } from './_templates/news/news.component';
+import { NewsComponent } from './_templates/Features/news/news.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    ContentComponent,
-    AdressInformationComponent,
+    WalletComponent,
     FooterComponent,
-    CoinInformationComponent,
+    MarketComponent,
     GraphComponent,
     NewsComponent
   ],
@@ -32,7 +30,7 @@ import { NewsComponent } from './_templates/news/news.component';
     FormsModule,
     NgxChartsModule
   ],
-  providers: [CoinInformationComponent],
+  providers: [MarketComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

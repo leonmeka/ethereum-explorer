@@ -3,7 +3,9 @@
       <h5 class="card-title-margin">News</h5>
       <div class="d-flex flex-row flex-nowrap scrollable">
         
-        <img *ngIf="loading" src="./../../../assets/GIFs/loading.gif" class="center" width="100" height="100">
+        <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
 
         <div class="news-item" *ngFor="let article of articles">
           <a href="{{article['url']}}" style="text-decoration: none; color: black;">

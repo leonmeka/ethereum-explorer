@@ -8,4 +8,27 @@ import { Plugins } from '@capacitor/core';
 })
 export class AppComponent {
   title = 'ethereum-explorer';
+  showSidebar = false;
+
+  showWalletApp = true;
+  showMarketApp = false;
+  showNewsApp = false;
+
+  toggleClass() {
+    this.showSidebar = !this.showSidebar;
+  }
+
+  changeApp(app:string){
+    this.showWalletApp = false;
+    this.showMarketApp = false;
+    this.showNewsApp = false;
+
+    if(app == "wallet"){
+      this.showWalletApp = true;
+    }else if(app == "market"){
+      this.showMarketApp = true;
+    }else if(app == "news"){
+      this.showNewsApp = true;
+    }
+  }
 }

@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-body">
+      <h5 class="card-title-margin">Add New Wallet</h5>
+
+      <div class="input-group form-floating mb-3">
+          <input (keyup.enter)="loadAdressData($event)" id="adress" spellcheck="false" [(ngModel)]="adress" type="text" class="form-control" id="floatingInput">
+          <label for="floatingInput">ETH Adress (ERC20)</label>
+          <button (click)="loadAdressData($event)" class="btn btn-outline-primary" type="button">➕ Add Wallet</button>
+      </div>
+    
+      <div class="form-text">
+        An ETH address, also known as an ERC20 address, is the receiving address of an Ethereum wallet. The address starts with “0x” and is followed by a series of 40 random characters. <br><br>
+        Example: 0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    
+    <div *ngIf="informationReceived">
+      <hr>
+      <div class="padding">
+          <h5 class="card-title-margin" style="display: block; width: 100%">My Wallet</h5>
+          <div class="card">
+            <div class="card-body">
+              <div style="display: flex; justify-content: flex-start">
+                <div style="display: block;">
+                  <img src="{{this.qr_url}}" width="35px" height="100%" style="object-fit: contain; margin-right: 1em;">
+                </div>
+                <div style="display: block; width: 100%">
+                  <h6 card-body-title><b>ETH</b> Ethereum</h6>
+                  <span>{{this.balance}}</span> | ${{this._marketComponent.currentPriceUSD}}
+                </div>
+                <div style="display: block; float: right; width: 100%; text-align: right;">
+                  <h6 card-body-title><span>${{this.value}}</span></h6>
+                  <span class="badge bg-success">+{{this.price_change_percentage_24h}}%</span>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="collapsed">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Transactions:
+                  <span class="badge bg-primary rounded-pill">{{this.transactions_number}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Unconfirmed Transactions:
+                  <span class="badge bg-primary rounded-pill">{{this.unconfirmed_transactions_number}}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-header">
+              <button *ngIf="!collapsed" (click)="collapsed = !collapsed" class="btn center">
+                <b>More Information</b>
+              </button>
+              <button *ngIf="collapsed" (click)="collapsed = !collapsed" class="btn center">
+                <b>Less Information</b>
+              </button>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
+      <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try another one.<br>
+    </div>
+
+    <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
+      <strong>😖 Oh no.</strong> This shouldn't have happened. Please try again later.<br>
+      <i>devconsole: {{this.errorMessage}}</i>
+    </div>
+</div>
+

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/_services/data-service';
 
 @Component({
-  selector: 'app-coin-information',
-  templateUrl: './coin-information.component.html',
-  styleUrls: ['./coin-information.component.css']
+  selector: 'app-market',
+  templateUrl: './market.component.html',
+  styleUrls: ['./market.component.css']
 })
-export class CoinInformationComponent implements OnInit {
+export class MarketComponent implements OnInit {
   public collapsed:boolean;
 
   public id:string;
@@ -15,6 +15,8 @@ export class CoinInformationComponent implements OnInit {
   public marketCapRank: number;
   public currentPriceUSD:number;
   public allTimeHigh:number;
+  public price_change_24h:number;
+  public price_change_percentage_24h:number;
   public allTimeLow:number;
   public trustScore:string;
   public desc:string;
@@ -51,6 +53,8 @@ export class CoinInformationComponent implements OnInit {
       this.allTimeHigh = data["market_data"]["ath"]["usd"];
       this.allTimeLow = data["market_data"]["atl"]["usd"];
       this.desc = data["ico_data"]["short_desc"];
+      this.price_change_24h = this.roundTo(data["market_data"]["price_change_24h"],2);
+      this.price_change_percentage_24h = this.roundTo(data["market_data"]["price_change_percentage_24h"],2);
 
       this.loading = false;
       }, error =>{
@@ -66,5 +70,23 @@ export class CoinInformationComponent implements OnInit {
           this.error = false;
         }
     });
+  }
+
+  private roundTo(n, digits):number {
+    var negative = false;
+    if (digits === undefined) {
+        digits = 0;
+    }
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+    var multiplicator = Math.pow(10, digits);
+    n = parseFloat((n * multiplicator).toFixed(11));
+    n = (Math.round(n) / multiplicator).toFixed(digits);
+    if (negative) {
+        n = (n * -1).toFixed(digits);
+    }
+    return n;
   }
 }

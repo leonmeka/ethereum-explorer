@@ -1,3 +1,8 @@
+*{
+    user-select: none;
+    cursor: default;
+}
+
 /* You can add global styles to this file, and also import other style files */
 .card{
     margin-bottom: 1em;

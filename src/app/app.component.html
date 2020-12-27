@@ -1,3 +1,30 @@
-<app-navbar></app-navbar>
-<app-content></app-content>
-<app-footer></app-footer>
+<div [class.toggled]="showSidebar" class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light border-end" id="sidebar-wrapper">
+      <div class="sidebar-heading">Ethereum Explorer</div>
+      <div class="list-group list-group-flush">
+        <a (click)="changeApp('wallet')" class="list-group-item list-group-item-action bg-light">My Wallet(s)</a>
+        <a (click)="changeApp('market')" class="list-group-item list-group-item-action bg-light">Market</a>
+        <a (click)="changeApp('news')" class="list-group-item list-group-item-action bg-light">News</a>
+      </div>
+      <app-footer></app-footer>
+    </div>
+
+    <!-- Navbar -->
+    <div id="page-content-wrapper">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+              <div [class.open]="showSidebar" class="sideBarToggle" (click)="toggleClass()" id="nav-icon1">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+          </nav>
+
+        <!-- Content -->
+        <div style="padding: 1em;">
+          <app-wallet *ngIf="showWalletApp"></app-wallet> 
+          <app-market *ngIf="showMarketApp"></app-market>
+          <app-news *ngIf="showNewsApp"></app-news>
+        </div>
+    </div>
+</div>

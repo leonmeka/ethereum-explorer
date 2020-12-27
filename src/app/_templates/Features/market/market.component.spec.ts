@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoinInformationComponent } from './coin-information.component';
+import { MarketComponent } from './market.component';
 
 describe('CoinInformationComponent', () => {
-  let component: CoinInformationComponent;
-  let fixture: ComponentFixture<CoinInformationComponent>;
+  let component: MarketComponent;
+  let fixture: ComponentFixture<MarketComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CoinInformationComponent ]
+      declarations: [ MarketComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CoinInformationComponent);
+    fixture = TestBed.createComponent(MarketComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
