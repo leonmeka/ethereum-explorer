@@ -2,10 +2,15 @@
     <!-- Sidebar -->
     <div class="bg-light border-end" id="sidebar-wrapper">
       <div class="sidebar-heading">Ethereum Explorer</div>
-      <div class="list-group list-group-flush">
-        <a (click)="changeApp('wallet')" class="list-group-item list-group-item-action bg-light">My Wallet(s)</a>
-        <a (click)="changeApp('market')" class="list-group-item list-group-item-action bg-light">Market</a>
-        <a (click)="changeApp('news')" class="list-group-item list-group-item-action bg-light">News</a>
+      <div *ngIf="showSidebar"  class="list-group list-group-flush">
+        <a (click)="changeApp('wallet',true)" class="list-group-item list-group-item-action bg-light">My Wallet(s)</a>
+        <a (click)="changeApp('market',true)" class="list-group-item list-group-item-action bg-light">Market</a>
+        <a (click)="changeApp('news',true)" class="list-group-item list-group-item-action bg-light">News</a>
+      </div>
+      <div *ngIf="!showSidebar"  class="list-group list-group-flush">
+        <a (click)="changeApp('wallet',false)" class="list-group-item list-group-item-action bg-light">My Wallet(s)</a>
+        <a (click)="changeApp('market',false)" class="list-group-item list-group-item-action bg-light">Market</a>
+        <a (click)="changeApp('news',false)" class="list-group-item list-group-item-action bg-light">News</a>
       </div>
       <app-footer></app-footer>
     </div>

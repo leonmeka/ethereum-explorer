@@ -22,6 +22,7 @@ export class WalletComponent implements OnInit {
 
   wallet:Wallet;
   wallets:Wallet[];
+  sortedUp:boolean;
   
   adress:string;
 
@@ -114,5 +115,21 @@ export class WalletComponent implements OnInit {
     this.adress = resultString;
     this.scanSuccessful = true;
     this.loadAdressData(this.adress);
+  }
+
+  public reloadData(){
+    for(let wallet of this.wallets){
+      this.loadAdressData(wallet.adress);
+    }
+  }
+
+  public sortBy(criteria:string){
+    if(criteria == "up"){
+      this.wallets.sort((a,b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0)); 
+      this.sortedUp = true;
+    }else{
+      this.wallets.sort((b,a) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0)); 
+      this.sortedUp = false;
+    }
   }
 }

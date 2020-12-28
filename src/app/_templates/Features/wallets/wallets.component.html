@@ -21,14 +21,25 @@
 
     <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
       <strong>😖 Oh no.</strong> This shouldn't have happened. Please try again later.<br>
-      <i>devconsole: {{this.errorMessage}}</i>
     </div>
     
     <div>
       <hr>
       <div class="padding">
-          <h5 class="card-title-margin" style="display: block; width: 100%">My Wallets ({{wallets.length}})</h5>
-
+          <h5 class="card-title-margin" style="display:inline-block; width: 50%">My Wallets ({{wallets.length}})</h5>
+          <div style="display:inline-block; width: 50%; text-align: right;">
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" ata-bs-target="#dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort by
+              </button>
+              <div class="dropdown-menu" id="dropdown" aria-labelledby="dropdown">
+                <a class="dropdown-item" style="text-align:right;" (click)="sortBy('up');">Balance: Low to High</a>
+                <a class="dropdown-item" style="text-align:right;" (click)="sortBy('down');">Balance: High to Low</a>
+              </div>
+            </div>
+            <button (click)="reloadData()" type="button" style="margin-left: 0.5em;" class="btn btn-secondary btn-sm">⟳</button>
+          </div>
+          
           <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
             <span class="visually-hidden">Loading...</span>
           </div>
@@ -39,7 +50,7 @@
             <div class="card-body">
               <div style="display: flex; justify-content: flex-start">
                 <div style="display: block;">
-                  <img src="{{wallet.qr_url}}" width="35px" height="100%" style="object-fit: contain; margin-right: 1em;">
+                  <img src="{{wallet.qr_url}}" width="50px" height="100%" style="object-fit: contain; margin-right: 1em;">
                 </div>
                 <div style="display: block; width: 100%">
                   <h6 card-body-title><b>ETH</b> Ethereum</h6>
@@ -58,6 +69,7 @@
                   Transactions:
                   <span class="badge bg-primary rounded-pill">{{wallet.transactions_number}}</span>
                 </li>
+                
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Unconfirmed Transactions:
                   <span class="badge bg-primary rounded-pill">{{wallet.unconfirmed_transactions_number}}</span>

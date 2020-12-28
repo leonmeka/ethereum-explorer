@@ -18,7 +18,7 @@ export class AppComponent {
     this.showSidebar = !this.showSidebar;
   }
 
-  changeApp(app:string){
+  changeApp(app:string, closeSidebar:boolean){
     this.showWalletApp = false;
     this.showMarketApp = false;
     this.showNewsApp = false;
@@ -29,6 +29,10 @@ export class AppComponent {
       this.showMarketApp = true;
     }else if(app == "news"){
       this.showNewsApp = true;
+    }
+
+    if(closeSidebar){
+      this.toggleClass();
     }
   }
 }
