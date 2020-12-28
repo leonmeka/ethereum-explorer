@@ -3,7 +3,7 @@
       <h5 class="card-title-margin">Add New Wallet</h5>
 
       <div class="input-group form-floating mb-3">
-          <input (keyup.enter)="loadAdressData(this.adress)" id="adress" spellcheck="false" [class.is-invalid]="error" [(ngModel)]="adress" type="text" class="form-control selectable" id="floatingInput">
+          <input (keyup.enter)="loadAdressData(this.adress)" id="adress" spellcheck="false" [(ngModel)]="adress" type="text" class="form-control selectable" id="floatingInput">
           <label for="floatingInput">ETH Adress (ERC20)</label>
           <button (click)="loadAdressData(this.adress)" class="btn btn-outline-primary" type="button">Add</button>
           <button (click)="openCamera($event)" data-bs-toggle="modal" data-bs-target="#cameraModal" class="btn btn-outline-dark" type="button">📷</button>
@@ -15,12 +15,12 @@
       </div>
     </div>
 
-    <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
-      <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try another one.<br>
+    <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
+      <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
     </div>
 
-    <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
-      <strong>😖 Oh no.</strong> This shouldn't have happened. Please try again later.<br>
+    <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
+      <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try another one.<br>
     </div>
     
     <div>
@@ -91,18 +91,15 @@
 </div>
 
 <!-- Modal -->
-<div class="modal modal-dialog modal-dialog-centered fade" id="cameraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modalCenter">
-    <div class="modal-content">
-      <div class="modal-header">
+<div class="modal modal-dialog modal-dialog-centered fade center avoid-clicks" id="cameraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog avoid-clicks">
+    <div class="modal-content avoid-clicks">
+      <div class="modal-header avoid-clicks">
         <h5 class="modal-title" id="exampleModalLabel">Scan QR-Code</h5>
-        <button type="button" (click)="cameraEnabled = !cameraEnabled" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" (click)="cameraEnabled = !cameraEnabled" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="pointer-events: visible;"></button>
       </div>
       <div class="modal-body">
         <zxing-scanner id="video" *ngIf="cameraEnabled" (scanSuccess)="takePhoto($event);" [formats]="['QR_CODE']"></zxing-scanner>
-      </div>
-      <div class="modal-footer">
-        <button (click)="cameraEnabled = !cameraEnabled; scanSuccessful = !scanSuccessful" type="button" #closeModal class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

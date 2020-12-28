@@ -14,11 +14,12 @@
     </ngx-charts-line-chart >
 </div>
 
-<img *ngIf="loading" src="./../../../assets/GIFs/loading.gif" class="center" width="100" height="100">
+<div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
+    <span class="visually-hidden">Loading...</span>
+</div>
 
 <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
-    <strong>😖 Oh no.</strong> This shouldn't have happened. Please try again later.<br>
-    <i>devconsole: {{this.errorMessage}}</i>
+    <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
 </div>
 
 <div *ngIf="error" class="card-header alert-warning fade show" role="alert">

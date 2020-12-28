@@ -28,7 +28,7 @@ export class MarketComponent implements OnInit {
 
   constructor(private _dataService:DataService) { 
     this.loadCoinData();
-    this.collapsed = false;
+    this.collapsed = true;
   }
 
   ngOnInit(): void {
