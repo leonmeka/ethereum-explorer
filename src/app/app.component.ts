@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Plugins } from '@capacitor/core';
 
 @Component({
   selector: 'app-root',
@@ -10,28 +9,28 @@ export class AppComponent {
   title = 'ethereum-explorer';
   showSidebar = false;
 
-  showWalletApp = true;
+  showWalletApp = false;
   showMarketApp = false;
-  showNewsApp = false;
+  showNewsApp = true;
 
   toggleClass() {
     this.showSidebar = !this.showSidebar;
   }
 
-  changeApp(app:string, closeSidebar:boolean){
+  changeApp(app: string, closeSidebar: boolean) {
     this.showWalletApp = false;
     this.showMarketApp = false;
     this.showNewsApp = false;
 
-    if(app == "wallet"){
+    if (app == "wallet") {
       this.showWalletApp = true;
-    }else if(app == "market"){
+    } else if (app == "market") {
       this.showMarketApp = true;
-    }else if(app == "news"){
+    } else if (app == "news") {
       this.showNewsApp = true;
     }
 
-    if(closeSidebar){
+    if (closeSidebar) {
       this.toggleClass();
     }
   }

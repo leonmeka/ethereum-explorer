@@ -17,3 +17,7 @@ img{
     width: 500;
     margin-right: 1em;
 }
+
+li:hover{
+    background-color: rgba(0,0,0,0.05);
+}

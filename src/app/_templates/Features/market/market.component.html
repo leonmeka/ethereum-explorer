@@ -1,49 +1,144 @@
 <div class="card">
-    <div class="card-body">
-      <h5 class="card-title-margin">Market Data</h5>
-      <h6 class="card-title">{{this.id}} <b>(USD/{{this.symbol}})</b></h6>
-      <p class="card-text">{{this.description}}</p>
-      
-    </div>
+  <div class="card-body">
+    <h5 class="card-title-margin">Market Data</h5>
+    <h6 class="card-title">{{this.id}} <b>({{this.symbol}})</b></h6>
+    <h4 class="card-text"><span>${{this.current_price}} USD/ETH</span> <span class="badge"
+        [ngClass]="{'bg-success': price_change_positive === true, 'bg-danger':price_change_positive === false}"
+        style="font-size: 0.4em; vertical-align: middle; margin-left: 1em;">{{
+        price_change_positive ? "+" : "" }}{{this.price_change_percentage_24h}}%</span></h4>
+  </div>
 
-    <app-graph></app-graph>
+  <hr>
 
-    <div *ngIf="collapsed">
-      <hr>
+  <div class="row padding" style="padding: 0 2em 0 2em;">
+    <div class="card col-4">
       <div class="card-body">
-        <h5 class="card-body-title">Statistics</h5>
-        <ul class="list-group list-group-flush">    
-          <li class="list-group-item">Market Capitalization Rank: <span>{{this.market_cap_rank}}</span></li>
-        <li class="list-group-item">Market Capitalization: <span>${{this.market_cap}}</span></li>
-        <li class="list-group-item">Current Price: <span>${{this.current_price}}</span></li>
-        <li class="list-group-item">All Time High: <span>${{this.all_time_high}}</span></li>
-        <li class="list-group-item">All Time Low: <span>${{this.all_time_low}}</span></li>
-      </ul>
+        <div class="card-body-title">
+          <h6>Market Capitalization</h6>
+        </div>
+        <span>${{market_cap}} USD ({{price_change_positive ? "+" : ""
+          }}{{this.market_cap_change_percentage_24h}}%)</span>
+      </div>
     </div>
 
-    <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
-      <span class="visually-hidden">Loading...</span>
+    <div class="card col-4">
+      <div class="card-body">
+        <div class="card-body-title">
+          <h6>Volume</h6>
+        </div>
+        <span>${{volume}} USD</span>
+      </div>
     </div>
-    
-    <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
-      <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
-    </div>
-  
-    <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
-      <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try another one.<br>
+
+    <div class="card col-4">
+      <div class="card-body">
+        <div class="card-body-title">
+          <h6>Circulating Supply</h6>
+        </div>
+        <span>{{circulating_supply}} ETH</span>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
+  <app-graph></app-graph>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-body-title">ETH Price Statistics</h5>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between align-items-center">Ethereum Price:
+        <span>${{this.current_price}} USD</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">Price Change (24h):
+        <span>${{this.price_change_24h}} USD</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">Current Price:
+        <span>${{this.current_price}} USD</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">All Time High:
+        <span>${{this.all_time_high}} USD</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">All Time Low:
+        <span>${{this.all_time_low}} USD</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">Market Rank:
+        <span>#{{this.market_cap_rank}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100"
+    style="margin-bottom: 1em;">
     <span class="visually-hidden">Loading...</span>
   </div>
 
-  <div class="card-header">
-    <button *ngIf="!collapsed" (click)="collapsed = !collapsed" class="btn center">
-      <b>More Information</b>
-    </button>
-    <button *ngIf="collapsed" (click)="collapsed = !collapsed" class="btn center">
-      <b>Less Information</b>
-    </button>
+  <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
+    <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
+  </div>
+
+  <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
+    <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try
+    another one.<br>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-body-title" style="display:inline-block; width: 50%">Tickers</h5>
+
+    <div style="display:inline-block; width: 50%; text-align: right;">
+      <div class="btn-group">
+        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+          ata-bs-target="#dropdown" aria-haspopup="true" aria-expanded="false">
+          Sort by
+        </button>
+        <div class="dropdown-menu" id="dropdown" aria-labelledby="dropdown">
+          <a class="dropdown-item" style="text-align:right;" (click)="sortBy('up');">Volume: Low to High</a>
+          <a class="dropdown-item" style="text-align:right;" (click)="sortBy('down');">Volume: High to Low</a>
+        </div>
+      </div>
+      <button (click)="reloadData()" type="button" style="margin-left: 0.5em;"
+        class="btn btn-secondary btn-sm">⟳</button>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Pair</th>
+            <th scope="col">Price</th>
+            <th scope="col">Volume</th>
+            <th scope="col">Trust Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let market of markets; let i = index" [attr.data-index]="i" (click)="goToUrl(market.link)"
+            class="selectable" target="_blank">
+            <td scope="row">{{i}}</td>
+            <td>{{market.name}}</td>
+            <td>{{market.pair}}</td>
+            <td>{{market.price}}</td>
+            <td>{{market.volume}}</td>
+            <td>{{market.trust_score}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100"
+      style="margin-bottom: 1em;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
+    <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
+  </div>
+
+  <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
+    <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try
+    another one.<br>
   </div>
 </div>

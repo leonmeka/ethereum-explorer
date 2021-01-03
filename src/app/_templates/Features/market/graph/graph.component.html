@@ -1,21 +1,12 @@
 <div *ngIf="!severeError && !error" style="height: 300px;">
-    <hr>
-    <ngx-charts-line-chart 
-        [results]="multi"
-        [yAxisLabel]="'Value in USD'"
-        [xAxis]="true"
-        [yAxis]="true"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="false"
-        [gradient]="true"
-        [timeline]="true"
-        [scheme]="colorScheme"
+    <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100"
+        style="margin-bottom: 1em;">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <ngx-charts-line-chart [results]="multi" [yAxisLabel]="'Value in USD'" [xAxis]="true" [yAxis]="true"
+        [showXAxisLabel]="true" [showYAxisLabel]="false" [gradient]="true" [timeline]="true" [scheme]="colorScheme"
         [animations]="true">
-    </ngx-charts-line-chart >
-</div>
-
-<div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
-    <span class="visually-hidden">Loading...</span>
+    </ngx-charts-line-chart>
 </div>
 
 <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
@@ -23,5 +14,6 @@
 </div>
 
 <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
-    <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try another one.<br>
+    <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try
+    another one.<br>
 </div>

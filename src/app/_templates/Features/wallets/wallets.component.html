@@ -1,105 +1,117 @@
 <div class="card">
   <div class="card-body">
-      <h5 class="card-title-margin">Add New Wallet</h5>
+    <h5 class="card-title-margin">Add New Wallet</h5>
 
-      <div class="input-group form-floating mb-3">
-          <input (keyup.enter)="loadAdressData(this.adress)" id="adress" spellcheck="false" [(ngModel)]="adress" type="text" class="form-control selectable" id="floatingInput">
-          <label for="floatingInput">ETH Adress (ERC20)</label>
-          <button (click)="loadAdressData(this.adress)" class="btn btn-outline-primary" type="button">Add</button>
-          <button (click)="openCamera($event)" data-bs-toggle="modal" data-bs-target="#cameraModal" class="btn btn-outline-dark" type="button">📷</button>
-      </div>
-      
-      <div class="form-text">
-        An ETH address, also known as an ERC20 address, is the receiving address of an Ethereum wallet. The address starts with “0x” and is followed by a series of 40 random characters. <br><br>
-        Example: 0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8
-      </div>
+    <div class="input-group form-floating mb-3">
+      <input (keyup.enter)="loadAdressData(this.adress)" id="adress" spellcheck="false" [(ngModel)]="adress" type="text"
+        class="form-control selectable" id="floatingInput">
+      <label for="floatingInput">ETH Adress (ERC20)</label>
+      <button (click)="loadAdressData(this.adress)" class="btn btn-outline-primary" type="button">Add</button>
+      <button (click)="openCamera($event)" data-bs-toggle="modal" data-bs-target="#cameraModal"
+        class="btn btn-outline-dark" type="button">📷</button>
     </div>
 
-    <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
-      <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
+    <div class="form-text">
+      An ETH address, also known as an ERC20 address, is the receiving address of an Ethereum wallet. The address starts
+      with “0x” and is followed by a series of 40 random characters. <br><br>
+      Example: 0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8
     </div>
+  </div>
 
-    <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
-      <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try another one.<br>
-    </div>
-    
-    <div>
-      <hr>
-      <div class="padding">
-          <h5 class="card-title-margin" style="display:inline-block; width: 50%">My Wallets ({{wallets.length}})</h5>
-          <div style="display:inline-block; width: 50%; text-align: right;">
-            <div class="btn-group">
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" ata-bs-target="#dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort by
-              </button>
-              <div class="dropdown-menu" id="dropdown" aria-labelledby="dropdown">
-                <a class="dropdown-item" style="text-align:right;" (click)="sortBy('up');">Balance: Low to High</a>
-                <a class="dropdown-item" style="text-align:right;" (click)="sortBy('down');">Balance: High to Low</a>
-              </div>
-            </div>
-            <button (click)="reloadData()" type="button" style="margin-left: 0.5em;" class="btn btn-secondary btn-sm">⟳</button>
+  <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
+    <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
+  </div>
+
+  <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
+    <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try
+    another one.<br>
+  </div>
+
+  <div>
+    <hr>
+    <div class="padding">
+      <h5 class="card-title-margin" style="display:inline-block; width: 50%">My Wallets ({{wallets.length}})</h5>
+      <div style="display:inline-block; width: 50%; text-align: right;">
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            ata-bs-target="#dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by
+          </button>
+          <div class="dropdown-menu" id="dropdown" aria-labelledby="dropdown">
+            <a class="dropdown-item" style="text-align:right;" (click)="sortBy('up');">Balance: Low to High</a>
+            <a class="dropdown-item" style="text-align:right;" (click)="sortBy('down');">Balance: High to Low</a>
           </div>
-          
-          <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100" style="margin-bottom: 1em;">
-            <span class="visually-hidden">Loading...</span>
-          </div>
+        </div>
+        <button (click)="reloadData()" type="button" style="margin-left: 0.5em;"
+          class="btn btn-secondary btn-sm">⟳</button>
+      </div>
 
-          <span *ngIf="!loading && wallets.length == 0"  class="center">Please add a new wallet.</span>
-          
-          <div class="card" *ngFor="let wallet of wallets">
-            <div class="card-body">
-              <div style="display: flex; justify-content: flex-start">
-                <div style="display: block;">
-                  <img src="{{wallet.qr_url}}" width="50px" height="100%" style="object-fit: contain; margin-right: 1em;">
-                </div>
-                <div style="display: block; width: 100%">
-                  <h6 card-body-title><b>ETH</b> Ethereum</h6>
-                  <span>{{wallet.balance}}</span> | ${{this._marketComponent.current_price}}
-                </div>
-                <div style="display: block; float: right; width: 100%; text-align: right;">
-                  <h6 card-body-title><span>${{wallet.value}}</span></h6>
-                  <span class="badge" [ngClass]="{'bg-success': price_change_positive === true, 'bg-danger':price_change_positive === false}">{{ price_change_positive ? "+" : "" }}{{this.price_change_percentage_24h}}%</span>
-                </div>
-              </div>
+      <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100"
+        style="margin-bottom: 1em;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <span *ngIf="!loading && wallets.length == 0" class="center">Please add a new wallet.</span>
+
+      <div class="card" *ngFor="let wallet of wallets">
+        <div class="card-body">
+          <div style="display: flex; justify-content: flex-start">
+            <div style="display: block;">
+              <img src="{{wallet.qr_url}}" width="50px" height="100%" style="object-fit: contain; margin-right: 1em;">
             </div>
-
-            <div *ngIf="wallet.collapsed">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Transactions:
-                  <span class="badge bg-primary rounded-pill">{{wallet.transactions_number}}</span>
-                </li>
-                
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Unconfirmed Transactions:
-                  <span class="badge bg-primary rounded-pill">{{wallet.unconfirmed_transactions_number}}</span>
-                </li>
-              </ul>
+            <div style="display: block; width: 100%">
+              <h6 card-body-title><b>ETH</b> Ethereum</h6>
+              <span>${{wallet.balance}}</span> | ${{this._marketComponent.current_price}}/ETH
             </div>
-
-            <div class="card-header">
-              <button *ngIf="!wallet.collapsed" (click)="wallet.collapsed = !wallet.collapsed" class="btn center">
-                <b>More Information</b>
-              </button>
-              <button *ngIf="wallet.collapsed" (click)="wallet.collapsed = !wallet.collapsed" class="btn center">
-                <b>Less Information</b>
-              </button>
+            <div style="display: block; float: right; width: 100%; text-align: right;">
+              <h6 card-body-title><span>${{wallet.value}}</span></h6>
+              <span class="badge"
+                [ngClass]="{'bg-success': price_change_positive === true, 'bg-danger':price_change_positive === false}">{{
+                price_change_positive ? "+" : "" }}{{this.price_change_percentage_24h}}%</span>
             </div>
           </div>
+        </div>
+
+        <div *ngIf="wallet.collapsed">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Transactions:
+              <span class="badge bg-primary rounded-pill">{{wallet.transactions_number}}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Unconfirmed Transactions:
+              <span class="badge bg-primary rounded-pill">{{wallet.unconfirmed_transactions_number}}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-header">
+          <button *ngIf="!wallet.collapsed" (click)="wallet.collapsed = !wallet.collapsed" class="btn center">
+            <b>More Information</b>
+          </button>
+          <button *ngIf="wallet.collapsed" (click)="wallet.collapsed = !wallet.collapsed" class="btn center">
+            <b>Less Information</b>
+          </button>
+        </div>
       </div>
     </div>
+  </div>
 </div>
 
 <!-- Modal -->
-<div class="modal modal-dialog modal-dialog-centered fade center avoid-clicks" id="cameraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal modal-dialog modal-dialog-centered fade center avoid-clicks" id="cameraModal" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog avoid-clicks">
     <div class="modal-content avoid-clicks">
       <div class="modal-header avoid-clicks">
         <h5 class="modal-title" id="exampleModalLabel">Scan QR-Code</h5>
-        <button type="button" (click)="cameraEnabled = !cameraEnabled" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="pointer-events: visible;"></button>
+        <button type="button" (click)="cameraEnabled = !cameraEnabled" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close" #closeModal style="pointer-events: visible;"></button>
       </div>
       <div class="modal-body">
-        <zxing-scanner id="video" *ngIf="cameraEnabled" (scanSuccess)="takePhoto($event);" [formats]="['QR_CODE']"></zxing-scanner>
+        <zxing-scanner id="video" *ngIf="cameraEnabled" (scanSuccess)="takePhoto($event);" [formats]="['QR_CODE']">
+        </zxing-scanner>
       </div>
     </div>
   </div>

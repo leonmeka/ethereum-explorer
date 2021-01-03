@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Market } from 'src/app/_interfaces/market';
 import { DataService } from 'src/app/_services/data-service';
+import { AppUtilities } from 'src/app/_utilities/AppUtilities';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-market',
@@ -7,85 +10,137 @@ import { DataService } from 'src/app/_services/data-service';
   styleUrls: ['./market.component.css']
 })
 export class MarketComponent implements OnInit {
-  public collapsed:boolean;
+  public collapsed: boolean;
 
-  public id:string;
-  public symbol:string;
+  public id: string;
+  public symbol: string;
   public market_cap: number;
+  public market_cap_change_percentage_24h: number;
+  public volume: number;
+  public circulating_supply: number;
   public market_cap_rank: number;
-  public current_price:number;
-  public all_time_high:number;
-  public all_time_low:number;
-  public price_change_24h:number;
-  public price_change_percentage_24h:number;
-  public description:string;
+  public current_price: number;
+  public all_time_high: number;
+  public all_time_low: number;
+  public price_change_24h: number;
+  public price_change_percentage_24h: number;
+  public price_change_positive: boolean;
+  public description: string;
+  public markets: Market[];
 
-  severeError:boolean;
-  error:boolean;
-  errorMessage:string;
+  severeError: boolean;
+  error: boolean;
+  errorMessage: string;
 
-  loading:boolean;
+  loading: boolean;
+  sortedUp: boolean;
 
-  constructor(private _dataService:DataService) { 
-    this.loadCoinData();
+  constructor(private _dataService: DataService, @Inject(DOCUMENT) private document: Document) {
+    this.loadMarketData();
+    this.markets = [];
     this.collapsed = true;
   }
 
   ngOnInit(): void {
   }
 
-  public loadCoinData(){
+  public loadMarketData() {
     this.loading = true;
     this.error = false;
     this.severeError = false;
-    
+
     this._dataService.getCoinData().subscribe((data) => {
       this.id = data["id"];
       this.id = this.id.charAt(0).toUpperCase() + this.id.slice(1);
 
       this.symbol = data["symbol"];
       this.symbol = this.symbol.toUpperCase();
-      
-      this.market_cap = data["market_data"]["market_cap"]["usd"];
+
+      this.market_cap = AppUtilities.formatMoney(data["market_data"]["market_cap"]["usd"]);
+      this.volume = AppUtilities.formatMoney(data["market_data"]["total_volume"]["usd"]);
+      this.circulating_supply = AppUtilities.formatMoney(data["market_data"]["circulating_supply"]);
       this.market_cap_rank = data["market_cap_rank"];
-      this.current_price = data["market_data"]["current_price"]["usd"];
-      this.all_time_high = data["market_data"]["ath"]["usd"];
-      this.all_time_low = data["market_data"]["atl"]["usd"];
+      this.market_cap_change_percentage_24h = data["market_data"]["market_cap_change_percentage_24h"].toFixed(2);
+      this.current_price = AppUtilities.formatMoney(data["market_data"]["current_price"]["usd"]);
+      this.all_time_high = AppUtilities.formatMoney(data["market_data"]["ath"]["usd"]);
+      this.all_time_low = AppUtilities.formatMoney(data["market_data"]["atl"]["usd"]);
       this.description = data["ico_data"]["short_desc"];
-      this.price_change_24h = this.roundTo(data["market_data"]["price_change_24h"],2);
-      this.price_change_percentage_24h = this.roundTo(data["market_data"]["price_change_percentage_24h"],2);
+      this.price_change_24h = AppUtilities.formatMoney(this.roundTo(data["market_data"]["price_change_24h"], 2));
+      this.price_change_percentage_24h = this.roundTo(data["market_data"]["price_change_percentage_24h"], 2);
+
+      this.price_change_positive = (this.price_change_24h > 0) ? true : false
+
+      data["tickers"].forEach(m => {
+        if (m["base"].length <= 3) {
+          const newMarket = {
+            name: m["market"]["name"],
+            pair: m["base"] + "/" + m["target"],
+            price: AppUtilities.formatMoney(m["last"]),
+            volume: m["volume"].toFixed(2),
+            trust_score: m["trust_score"],
+            link: m["trade_url"]
+          };
+
+          this.markets.push(newMarket);
+        }
+      });
+
+      this.sortBy("down");
 
       this.loading = false;
-      }, error =>{
-        if(error.statusText == "OK"){
-          this.errorMessage = error.statusText + "(" + error.message + ")";
-          this.error = true;
-          this.severeError = false;
+    }, error => {
+      if (error.statusText == "OK") {
+        this.errorMessage = error.statusText + "(" + error.message + ")";
+        this.error = true;
+        this.severeError = false;
 
-          this.loading = false;
-        }else{
-          this.errorMessage = error.statusText + "(" + error.message + ")";
-          this.severeError = true;
-          this.error = false;
-        }
+        this.loading = false;
+      } else {
+        this.errorMessage = error.statusText + "(" + error.message + ")";
+        this.severeError = true;
+        this.error = false;
+
+        this.loading = false;
+      }
     });
   }
 
-  private roundTo(n, digits):number {
+  private roundTo(n, digits): number {
     var negative = false;
     if (digits === undefined) {
-        digits = 0;
+      digits = 0;
     }
     if (n < 0) {
-        negative = true;
-        n = n * -1;
+      negative = true;
+      n = n * -1;
     }
     var multiplicator = Math.pow(10, digits);
     n = parseFloat((n * multiplicator).toFixed(11));
     n = (Math.round(n) / multiplicator).toFixed(digits);
     if (negative) {
-        n = (n * -1).toFixed(digits);
+      n = (n * -1).toFixed(digits);
     }
     return n;
+  }
+
+  public reloadData() {
+    this.loadMarketData();
+  }
+
+  public sortBy(criteria: string) {
+    if (criteria == "up") {
+      this.markets.sort((a, b) => (a.volume > b.volume) ? 1 : ((b.volume > a.volume) ? -1 : 0));
+      this.sortedUp = true;
+    } else {
+      this.markets.sort((b, a) => (a.volume > b.volume) ? 1 : ((b.volume > a.volume) ? -1 : 0));
+      this.sortedUp = false;
+    }
+  }
+
+  public goToUrl(adr: string) {
+    if (adr != null) {
+      window.open(adr, "_blank");
+      alert("Sorry. No Link available at this time.");
+    }
   }
 }

@@ -8,15 +8,15 @@ import { DataService } from 'src/app/_services/data-service';
 })
 export class NewsComponent implements OnInit {
 
-  articles:Object[];
-  
-  severeError:boolean;
-  error:boolean;
-  errorMessage:string;
+  articles: Object[];
 
-  loading:boolean;
+  severeError: boolean;
+  error: boolean;
+  errorMessage: string;
 
-  constructor(private _dataService:DataService) { 
+  loading: boolean;
+
+  constructor(private _dataService: DataService) {
     this.loadNews();
     this.articles = [];
   }
@@ -24,7 +24,7 @@ export class NewsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public loadNews(){
+  public loadNews() {
     this.loading = true;
     this.error = false;
     this.severeError = false;
@@ -33,14 +33,14 @@ export class NewsComponent implements OnInit {
       this.articles = _data["articles"]
 
       this.loading = false;
-    }, error =>{
-      if(error.statusText == "OK"){
+    }, error => {
+      if (error.statusText == "OK") {
         this.errorMessage = error.statusText + "(" + error.message + ")";
         this.error = true;
         this.severeError = false;
 
         this.loading = false;
-      }else{
+      } else {
         this.errorMessage = error.statusText + "(" + error.message + ")";
         this.severeError = true;
         this.error = false;
