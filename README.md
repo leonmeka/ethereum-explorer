@@ -1,7 +1,5 @@
 # Ethereum Explorer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
-
 Ethereum-Explorer offers an easy accessability to the latest Ethereum information, news and analytics for crypto investors and traders. Just search for your wallet and find all relevant data.
 
 Example:
