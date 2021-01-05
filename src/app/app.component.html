@@ -17,8 +17,8 @@
 
   <!-- Navbar -->
   <div id="page-content-wrapper">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-      <div [class.open]="showSidebar" class="sideBarToggle" (click)="toggleClass()" id="nav-icon1">
+    <nav [class.open]="showSidebar" class="navbar navbar-expand-lg navbar-light bg-light border-bottom sideBarToggle">
+      <div [class.open]="showSidebar" (click)="toggleClass()" id="nav-icon1">
         <span></span>
         <span></span>
         <span></span>
@@ -26,10 +26,12 @@
     </nav>
 
     <!-- Content -->
-    <div style="padding: 1em;">
-      <app-wallet *ngIf="showWalletApp"></app-wallet>
-      <app-market *ngIf="showMarketApp"></app-market>
-      <app-news *ngIf="showNewsApp"></app-news>
+    <div>
+      <div class="scroll-hidden" style="padding: 1em;">
+        <app-wallet *ngIf="showWalletApp"></app-wallet>
+        <app-market *ngIf="showMarketApp"></app-market>
+        <app-news *ngIf="showNewsApp"></app-news>
+      </div>
     </div>
   </div>
 </div>

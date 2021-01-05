@@ -16,8 +16,7 @@
         <div class="card-body-title">
           <h6>Market Capitalization</h6>
         </div>
-        <span>${{market_cap}} USD ({{price_change_positive ? "+" : ""
-          }}{{this.market_cap_change_percentage_24h}}%)</span>
+        <span>${{market_cap}} USD</span>
       </div>
     </div>
 
@@ -135,10 +134,5 @@
 
   <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
     <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
-  </div>
-
-  <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
-    <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try
-    another one.<br>
   </div>
 </div>

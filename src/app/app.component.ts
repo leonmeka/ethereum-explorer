@@ -9,9 +9,9 @@ export class AppComponent {
   title = 'ethereum-explorer';
   showSidebar = false;
 
-  showWalletApp = false;
+  showWalletApp = true;
   showMarketApp = false;
-  showNewsApp = true;
+  showNewsApp = false;
 
   toggleClass() {
     this.showSidebar = !this.showSidebar;

@@ -46,9 +46,7 @@ export class WalletComponent implements OnInit {
     this.wallets = [];
     this.wallets = JSON.parse(this.cookieService.get("eth_adresses"));
 
-    for (let wallet of this.wallets) {
-      this.loadAdressData(wallet.adress);
-    }
+    this.reloadData()
   }
 
   public loadAdressData(adress: string) {
@@ -104,7 +102,7 @@ export class WalletComponent implements OnInit {
       this.loading = false;
     }
   }
- 
+
   public openCamera(event: any): void {
     this.scanSuccessful = false;
     this.cameraEnabled = true;
@@ -121,6 +119,14 @@ export class WalletComponent implements OnInit {
   public reloadData() {
     for (let wallet of this.wallets) {
       this.loadAdressData(wallet.adress);
+    }
+  }
+
+  public deleteFromWallets(wallet: Wallet): void {
+    const index = this.wallets.indexOf(wallet, 0);
+    if (index > -1) {
+      this.wallets.splice(index, 1);
+      this.cookieService.set('eth_adresses', JSON.stringify(this.wallets));
     }
   }
 

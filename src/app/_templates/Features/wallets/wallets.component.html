@@ -55,13 +55,17 @@
 
       <div class="card" *ngFor="let wallet of wallets">
         <div class="card-body">
+
+          <button type="button" class="btn-close" style="margin-bottom: 1em"
+            (click)="deleteFromWallets(wallet)"></button>
+
           <div style="display: flex; justify-content: flex-start">
             <div style="display: block;">
               <img src="{{wallet.qr_url}}" width="50px" height="100%" style="object-fit: contain; margin-right: 1em;">
             </div>
             <div style="display: block; width: 100%">
               <h6 card-body-title><b>ETH</b> Ethereum</h6>
-              <span>${{wallet.balance}}</span> | ${{this._marketComponent.current_price}}/ETH
+              <span>{{wallet.balance}} ETH</span> | ${{this._marketComponent.current_price}}/ETH
             </div>
             <div style="display: block; float: right; width: 100%; text-align: right;">
               <h6 card-body-title><span>${{wallet.value}}</span></h6>

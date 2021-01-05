@@ -12,7 +12,7 @@
 }
 
 .navbar{
-  height: 4em;
+  height: 50px;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -51,7 +51,7 @@
   }
 
   .sideBarToggle.open{
-    display: none;
+    display: none !important;
   }
 }
 
@@ -134,4 +134,20 @@
 
 .modal{
   position: absolute;
+}
+
+.scroll-hidden{
+  height: calc(100vh);
+  overflow-y: scroll; 
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .scroll-hidden{
+    height: calc(100vh - 3.1em); 
+  }
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
 }

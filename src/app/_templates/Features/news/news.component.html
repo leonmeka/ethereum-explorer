@@ -12,11 +12,9 @@
 
         <li class="list-group-item" *ngFor="let article of articles">
           <a href="{{article['url']}}" style="text-decoration: none; color: black;">
-            <img class="card-img" src="{{article['urlToImage']}}"
-              style="width: 5em; height: 5em; margin: 1em; float: left;">
             <b>{{article['title']}}</b>
             <p>{{article['description']}}</p>
-            <span style="float:right">by <i>{{article['source']['name']}}</i></span>
+            <span>by <i>{{article['source']['name']}}</i></span>
           </a>
         </li>
       </ul>
@@ -25,10 +23,5 @@
 
   <div *ngIf="severeError" class="card-header alert-danger fade show" role="alert">
     <strong>📡 Something went wrong.</strong> Please ensure you have proper internet connection.<br>
-  </div>
-
-  <div *ngIf="error" class="card-header alert-warning fade show" role="alert">
-    <strong>🤷‍♂️ Hmmm.</strong> Looks like we couldn't find the adress you typed in. Please check for typos or try
-    another one.<br>
   </div>
 </div>

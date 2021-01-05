@@ -61,7 +61,7 @@ export class MarketComponent implements OnInit {
       this.circulating_supply = AppUtilities.formatMoney(data["market_data"]["circulating_supply"]);
       this.market_cap_rank = data["market_cap_rank"];
       this.market_cap_change_percentage_24h = data["market_data"]["market_cap_change_percentage_24h"].toFixed(2);
-      this.current_price = AppUtilities.formatMoney(data["market_data"]["current_price"]["usd"]);
+      this.current_price = data["market_data"]["current_price"]["usd"];
       this.all_time_high = AppUtilities.formatMoney(data["market_data"]["ath"]["usd"]);
       this.all_time_low = AppUtilities.formatMoney(data["market_data"]["atl"]["usd"]);
       this.description = data["ico_data"]["short_desc"];
