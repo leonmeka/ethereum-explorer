@@ -8,6 +8,9 @@ function createWindow() {
     resizable: false,
     width: 1112,
     height: 834,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   win.loadURL(`file://${__dirname}/dist/ethereum-explorer/index.html`);
@@ -41,3 +44,11 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+function openNewWindow(adr) {
+  const child = new BrowserWindow({ parent: top, modal: true, show: false })
+  child.loadURL(adr)
+  child.once('ready-to-show', () => {
+    child.show()
+  })
+}

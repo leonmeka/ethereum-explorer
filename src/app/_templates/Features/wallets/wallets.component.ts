@@ -39,12 +39,17 @@ export class WalletComponent implements OnInit {
   loading: boolean;
 
 
-  constructor(private _dataService: DataService, private _marketComponent: MarketComponent, private cookieService: CookieService) {
+  constructor(private _dataService: DataService, private _marketComponent: MarketComponent, private cookieService: CookieService, private _appUtilities: AppUtilities) {
   }
 
   ngOnInit(): void {
     this.wallets = [];
-    this.wallets = JSON.parse(this.cookieService.get("eth_adresses"));
+    try {
+      this.wallets = JSON.parse(this.cookieService.get("eth_adresses"));
+      console.log("[COOKIES]: Found " + JSON.stringify(this.wallets));
+    } catch (e) {
+      console.log("[COOKIES]: cookies empty");
+    }
 
     this.reloadData()
   }
@@ -63,8 +68,8 @@ export class WalletComponent implements OnInit {
 
         this.wallet = {
           adress: adress,
-          balance: AppUtilities.formatMoney(AppUtilities.calculateDollarValue(data["balance"])),
-          value: AppUtilities.formatMoney(Number(Math.round(Number(Math.round(data["balance"] / 10000000000000000) + "e-0") * this._marketComponent.current_price) + "e-2")),
+          balance: this._appUtilities.formatMoney(AppUtilities.calculateDollarValue(data["balance"])),
+          value: this._appUtilities.formatMoney(Number(Math.round(Number(Math.round(data["balance"] / 10000000000000000) + "e-0") * this._marketComponent.current_price) + "e-2")),
           transactions_number: data["n_tx"],
           unconfirmed_transactions_number: data["unconfirmed_n_tx"],
           qr_url: "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=" + adress + "&choe=UTF-8",

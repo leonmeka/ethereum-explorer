@@ -13,6 +13,7 @@ import { GraphComponent } from './_templates/features/market/graph/graph.compone
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NewsComponent } from './_templates/features/news/news.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { AppUtilities } from './_utilities/AppUtilities';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,9 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     HttpClientModule,
     FormsModule,
     NgxChartsModule,
-    ZXingScannerModule,
+    ZXingScannerModule
   ],
-  providers: [MarketComponent],
+  providers: [MarketComponent, AppUtilities],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
