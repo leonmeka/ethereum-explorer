@@ -3,18 +3,18 @@
     <h5 class="card-title-margin">Ethereum News</h5>
     <div class="d-flex flex-row flex-nowrap ">
 
-      <div *ngIf="loading" class="spinner-border center text-secondary" width="100" height="100"
-        style="margin-bottom: 1em;">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+      <ul class="list-group list-group-flush" style="width: 100%;">
 
-      <ul class="list-group list-group-flush">
+        <div *ngIf="loading" class="spinner-grow center text-secondary" width="100" height="100"
+          style="margin-bottom: 1em;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
 
         <li class="list-group-item" *ngFor="let article of articles">
-          <a href="{{article['url']}}" style="text-decoration: none; color: black;">
-            <b>{{article['title']}}</b>
-            <p>{{article['description']}}</p>
-            <span>by <i>{{article['source']['name']}}</i></span>
+          <a (click)="_appUtilities.goToUrl(article['location']['uri'])" style="text-decoration: none; color: black;">
+            <b>{{article['title']['title']}}</b>
+            <p>{{article['editorial']['subheading']}}</p>
+            <span>by <i>{{article['editorial']['byline']}}</i></span>
           </a>
         </li>
       </ul>

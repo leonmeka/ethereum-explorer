@@ -33,9 +33,8 @@ export class MarketComponent implements OnInit {
   errorMessage: string;
 
   loading: boolean;
-  sortedUp: boolean;
 
-  constructor(private _dataService: DataService, @Inject(DOCUMENT) private document: Document) {
+  constructor(private _dataService: DataService, @Inject(DOCUMENT) private document: Document, private _appUtilities: AppUtilities) {
     this.loadMarketData();
     this.markets = [];
     this.collapsed = true;
@@ -56,16 +55,16 @@ export class MarketComponent implements OnInit {
       this.symbol = data["symbol"];
       this.symbol = this.symbol.toUpperCase();
 
-      this.market_cap = AppUtilities.formatMoney(data["market_data"]["market_cap"]["usd"]);
-      this.volume = AppUtilities.formatMoney(data["market_data"]["total_volume"]["usd"]);
-      this.circulating_supply = AppUtilities.formatMoney(data["market_data"]["circulating_supply"]);
+      this.market_cap = this._appUtilities.formatMoney(data["market_data"]["market_cap"]["usd"]);
+      this.volume = this._appUtilities.formatMoney(data["market_data"]["total_volume"]["usd"]);
+      this.circulating_supply = this._appUtilities.formatMoney(data["market_data"]["circulating_supply"]);
       this.market_cap_rank = data["market_cap_rank"];
       this.market_cap_change_percentage_24h = data["market_data"]["market_cap_change_percentage_24h"].toFixed(2);
       this.current_price = data["market_data"]["current_price"]["usd"];
-      this.all_time_high = AppUtilities.formatMoney(data["market_data"]["ath"]["usd"]);
-      this.all_time_low = AppUtilities.formatMoney(data["market_data"]["atl"]["usd"]);
+      this.all_time_high = this._appUtilities.formatMoney(data["market_data"]["ath"]["usd"]);
+      this.all_time_low = this._appUtilities.formatMoney(data["market_data"]["atl"]["usd"]);
       this.description = data["ico_data"]["short_desc"];
-      this.price_change_24h = AppUtilities.formatMoney(this.roundTo(data["market_data"]["price_change_24h"], 2));
+      this.price_change_24h = this._appUtilities.formatMoney(this.roundTo(data["market_data"]["price_change_24h"], 2));
       this.price_change_percentage_24h = this.roundTo(data["market_data"]["price_change_percentage_24h"], 2);
 
       this.price_change_positive = (this.price_change_24h > 0) ? true : false
@@ -75,8 +74,8 @@ export class MarketComponent implements OnInit {
           const newMarket = {
             name: m["market"]["name"],
             pair: m["base"] + "/" + m["target"],
-            price: AppUtilities.formatMoney(m["last"]),
-            volume: m["volume"].toFixed(2),
+            price: this._appUtilities.formatMoney(m["converted_last"]["usd"]),
+            volume: m["converted_volume"]["usd"],
             trust_score: m["trust_score"],
             link: m["trade_url"]
           };
@@ -85,7 +84,7 @@ export class MarketComponent implements OnInit {
         }
       });
 
-      this.sortBy("down");
+      this.sortBy("volumeDown");
 
       this.loading = false;
     }, error => {
@@ -128,19 +127,14 @@ export class MarketComponent implements OnInit {
   }
 
   public sortBy(criteria: string) {
-    if (criteria == "up") {
+    if (criteria == "volumeUp") {
       this.markets.sort((a, b) => (a.volume > b.volume) ? 1 : ((b.volume > a.volume) ? -1 : 0));
-      this.sortedUp = true;
-    } else {
+    } else if ((criteria == "volumeDown")) {
       this.markets.sort((b, a) => (a.volume > b.volume) ? 1 : ((b.volume > a.volume) ? -1 : 0));
-      this.sortedUp = false;
-    }
-  }
-
-  public goToUrl(adr: string) {
-    if (adr != null) {
-      window.open(adr, "_blank");
-      alert("Sorry. No Link available at this time.");
+    } if (criteria == "priceUp") {
+      this.markets.sort((a, b) => (a.price > b.price) ? 1 : ((b.price > a.price) ? -1 : 0));
+    } else if ((criteria == "priceDown")) {
+      this.markets.sort((b, a) => (a.price > b.price) ? 1 : ((b.price > a.price) ? -1 : 0));
     }
   }
 }

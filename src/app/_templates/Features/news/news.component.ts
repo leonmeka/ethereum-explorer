@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/_services/data-service';
+import { AppUtilities } from 'src/app/_utilities/AppUtilities';
 
 @Component({
   selector: 'app-news',
@@ -16,12 +17,12 @@ export class NewsComponent implements OnInit {
 
   loading: boolean;
 
-  constructor(private _dataService: DataService) {
-    this.loadNews();
-    this.articles = [];
+  constructor(private _dataService: DataService, private _appUtilities: AppUtilities) {
   }
 
   ngOnInit(): void {
+    this.loadNews();
+    this.articles = [];
   }
 
   public loadNews() {
@@ -30,7 +31,7 @@ export class NewsComponent implements OnInit {
     this.severeError = false;
 
     this._dataService.getNewsData().subscribe((_data) => {
-      this.articles = _data["articles"]
+      this.articles = _data["results"][0]["results"];
 
       this.loading = false;
     }, error => {
