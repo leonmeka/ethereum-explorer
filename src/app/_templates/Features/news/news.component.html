@@ -11,7 +11,7 @@
         </div>
 
         <li class="list-group-item" *ngFor="let article of articles">
-          <a (click)="_appUtilities.goToUrl(article['location']['uri'])" style="text-decoration: none; color: black;">
+          <a (click)="goToUrl(article['location']['uri'])" style="text-decoration: none; color: black;">
             <b>{{article['title']['title']}}</b>
             <p>{{article['editorial']['subheading']}}</p>
             <span>by <i>{{article['editorial']['byline']}}</i></span>

@@ -4,6 +4,8 @@ import { MarketComponent } from '../market/market.component';
 import { Wallet } from '../../../_interfaces/wallet';
 import { CookieService } from 'ngx-cookie-service';
 import { AppUtilities } from 'src/app/_utilities/AppUtilities';
+import { ElectronService } from 'ngx-electron';
+
 
 @Component({
   selector: 'app-wallet',
@@ -38,20 +40,24 @@ export class WalletComponent implements OnInit {
 
   loading: boolean;
 
-
-  constructor(private _dataService: DataService, private _marketComponent: MarketComponent, private cookieService: CookieService, private _appUtilities: AppUtilities) {
-  }
-
-  ngOnInit(): void {
+  constructor(private _dataService: DataService, private _marketComponent: MarketComponent, private cookieService: CookieService, private _appUtilities: AppUtilities, private _electronService: ElectronService) {
     this.wallets = [];
     try {
-      this.wallets = JSON.parse(this.cookieService.get("eth_adresses"));
-      console.log("[COOKIES]: Found " + JSON.stringify(this.wallets));
+      //this._electronService.ipcRenderer.send("load", "eth-adresses");
+      //this._electronService.ipcRenderer.on("asynchronous-reply", (event, response) => {
+      // this.wallets = JSON.parse(response);
+      // console.log("[COOKIES]: Found " + JSON.stringify(this.wallets))
+      //});
+
+      this.wallets = JSON.parse(window.localStorage["eth-adresses"]);
+      this.reloadData();
     } catch (e) {
       console.log("[COOKIES]: cookies empty");
     }
+  }
 
-    this.reloadData()
+  ngOnInit(): void {
+
   }
 
   public loadAdressData(adress: string) {
@@ -89,7 +95,8 @@ export class WalletComponent implements OnInit {
           this.wallets.push(this.wallet);
         }
 
-        this.cookieService.set('eth_adresses', JSON.stringify(this.wallets));
+        //this._electronService.ipcRenderer.send("save", JSON.stringify(this.wallets));
+        window.localStorage["eth-adresses"] = JSON.stringify(this.wallets);
         this.loading = false;
       }, error => {
         if (error.statusText == "OK") {
@@ -131,9 +138,11 @@ export class WalletComponent implements OnInit {
     const index = this.wallets.indexOf(wallet, 0);
     if (index > -1) {
       this.wallets.splice(index, 1);
-      this.cookieService.set('eth_adresses', JSON.stringify(this.wallets));
+      window.localStorage["eth-adresses"] = JSON.stringify(this.wallets);
+      //this._electronService.ipcRenderer.send("save", JSON.stringify(this.wallets));
     }
   }
+
 
   public sortBy(criteria: string) {
     if (criteria == "up") {

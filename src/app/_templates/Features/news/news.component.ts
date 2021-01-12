@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ElectronService } from 'ngx-electron';
 import { DataService } from 'src/app/_services/data-service';
 import { AppUtilities } from 'src/app/_utilities/AppUtilities';
 
@@ -17,7 +18,7 @@ export class NewsComponent implements OnInit {
 
   loading: boolean;
 
-  constructor(private _dataService: DataService, private _appUtilities: AppUtilities) {
+  constructor(private _dataService: DataService, private _electronService: ElectronService) {
   }
 
   ngOnInit(): void {
@@ -47,5 +48,10 @@ export class NewsComponent implements OnInit {
         this.error = false;
       }
     });
+  }
+
+  public goToUrl(adr: string) {
+    //this._electronService.ipcRenderer.send("externalLink", adr);
+    window.open(adr, "_blank");
   }
 }

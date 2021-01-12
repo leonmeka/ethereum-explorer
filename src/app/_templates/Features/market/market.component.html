@@ -115,8 +115,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let market of markets; let i = index" [attr.data-index]="i"
-            (click)="_appUtilities.goToUrl(market.link)" class="selectable" target="_blank">
+          <tr *ngFor="let market of markets; let i = index" [attr.data-index]="i" (click)="goToUrl(market.link)"
+            class="selectable" target="_blank">
             <td scope="row">{{i}}</td>
             <td>{{market.name}}</td>
             <td>{{market.pair}}</td>

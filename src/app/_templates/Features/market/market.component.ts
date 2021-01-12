@@ -3,6 +3,7 @@ import { Market } from 'src/app/_interfaces/market';
 import { DataService } from 'src/app/_services/data-service';
 import { AppUtilities } from 'src/app/_utilities/AppUtilities';
 import { DOCUMENT } from '@angular/common';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-market',
@@ -34,7 +35,7 @@ export class MarketComponent implements OnInit {
 
   loading: boolean;
 
-  constructor(private _dataService: DataService, @Inject(DOCUMENT) private document: Document, private _appUtilities: AppUtilities) {
+  constructor(private _dataService: DataService, @Inject(DOCUMENT) private document: Document, private _appUtilities: AppUtilities, private _electronService: ElectronService) {
     this.loadMarketData();
     this.markets = [];
     this.collapsed = true;
@@ -136,5 +137,10 @@ export class MarketComponent implements OnInit {
     } else if ((criteria == "priceDown")) {
       this.markets.sort((b, a) => (a.price > b.price) ? 1 : ((b.price > a.price) ? -1 : 0));
     }
+  }
+
+  public goToUrl(adr: string) {
+    //this._electronService.ipcRenderer.send("externalLink", adr);
+    window.open(adr, "_blank");
   }
 }
